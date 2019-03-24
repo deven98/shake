@@ -2,13 +2,26 @@
 
 A flutter package to detect phone shakes.
 
-## Getting Started
+To listen to phone shake:
 
-This project is a starting point for a Dart
-[package](https://flutter.io/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+    ShakeDetector detector = ShakeDetector.autoStart(
+        onPhoneShake: () {
+            // Do stuff on phone shake
+        }
+    );
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+OR
+
+    ShakeDetector detector = ShakeDetector.waitForStart(
+        onPhoneShake: () {
+            // Do stuff on phone shake
+        }
+    );
+    
+    detector.startListening();
+
+To stop listening:
+
+    detector.stopListening();
+
+
