@@ -2,6 +2,7 @@ library shake;
 
 import 'dart:async';
 import 'dart:math';
+
 import 'package:sensors/sensors.dart';
 
 /// Callback for phone shakes
@@ -25,25 +26,25 @@ class ShakeDetector {
   int mShakeCount = 0;
 
   /// StreamSubscription for Accelerometer events
-  StreamSubscription streamSubscription;
+  StreamSubscription? streamSubscription;
 
   /// This constructor waits until [startListening] is called
   ShakeDetector.waitForStart(
-      {this.onPhoneShake,
+      {required this.onPhoneShake,
       this.shakeThresholdGravity = 2.7,
       this.shakeSlopTimeMS = 500,
       this.shakeCountResetTime = 3000});
 
   /// This constructor automatically calls [startListening] and starts detection and callbacks.\
   ShakeDetector.autoStart(
-      {this.onPhoneShake,
+      {required this.onPhoneShake,
       this.shakeThresholdGravity = 2.7,
       this.shakeSlopTimeMS = 500,
       this.shakeCountResetTime = 3000}) {
     startListening();
   }
 
-  /// Starts listening to accerelometer events
+  /// Starts listening to accelerometer events
   void startListening() {
     streamSubscription = accelerometerEvents.listen((AccelerometerEvent event) {
       double x = event.x;
@@ -80,7 +81,7 @@ class ShakeDetector {
   /// Stops listening to accelerometer events
   void stopListening() {
     if (streamSubscription != null) {
-      streamSubscription.cancel();
+      streamSubscription!.cancel();
     }
   }
 }
