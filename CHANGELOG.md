@@ -1,3 +1,3 @@
-## [0.1.0] - 24/03/2019
+## [1.0.0] - 19/03/2021
 
-* Initial release: Added ShakeDetector class.
+* Null Safety Added 
