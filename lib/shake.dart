@@ -6,7 +6,7 @@ import 'dart:math';
 import 'package:sensors/sensors.dart';
 
 /// Callback for phone shakes
-typedef Null PhoneShakeCallback();
+typedef void PhoneShakeCallback();
 
 /// ShakeDetector class for phone shake functionality
 class ShakeDetector {
