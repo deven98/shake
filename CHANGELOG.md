@@ -1,3 +1,3 @@
-## [1.0.0] - 19/03/2021
+## [1.0.1] - 11/06/2021
 
-* Null Safety Added 
+* Changed callback return type
