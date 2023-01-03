@@ -32,8 +32,11 @@ class _DemoPageState extends State<DemoPage> {
     super.initState();
     ShakeDetector detector = ShakeDetector.autoStart(
       onPhoneShake: () {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Shake!')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Shake!'),
+          ),
+        );
         // Do stuff on phone shake
       },
       minimumShakeCount: 1,
@@ -48,6 +51,6 @@ class _DemoPageState extends State<DemoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }
