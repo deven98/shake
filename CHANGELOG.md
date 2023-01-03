@@ -1,3 +1,8 @@
+## [2.2.0]
+
+* Updated sensors_plus dep
+* Fixes flutter engine error
+
 ## [2.1.0]
 
 * Added minimum shake count for triggering shake callback
