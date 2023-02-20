@@ -116,10 +116,10 @@ packages:
     dependency: "direct main"
     description:
       name: sensors_plus
-      sha256: "362c8f4f001838b90dd5206b898bbad941bc0142479eab9a3415f0f79e622908"
+      sha256: fe503a91f6551c6ce27ee7684cfbe4c5beced10671fa76f4a3bebfa9e3adab91
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.1"
+    version: "2.0.2"
   sensors_plus_platform_interface:
     dependency: transitive
     description:
@@ -128,14 +128,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.3"
-  sensors_plus_web:
-    dependency: transitive
-    description:
-      name: sensors_plus_web
-      sha256: fca8d7d9ab6233b2a059952666415508e252420be1ef54f092d07884da53ec5e
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.2"
   sky_engine:
     dependency: transitive
     description: flutter
