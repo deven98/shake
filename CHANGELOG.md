@@ -1,3 +1,7 @@
+## Unreleased
+
+* Updated `sensors_plus` to `^2.0.2`
+
 ## [2.2.0]
 
 * Updated sensors_plus dep
