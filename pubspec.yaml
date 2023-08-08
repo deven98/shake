@@ -4,13 +4,13 @@ version: 3.0.0
 homepage: https://www.github.com/deven98/shake
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=2.18.0 <4.0.0"
   flutter: ">=3.3.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  sensors_plus: ^3.0.3
+  sensors_plus: ^3.0.0
 
 dev_dependencies:
   flutter_test:
