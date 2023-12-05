@@ -1,6 +1,6 @@
 name: shake
 description: A flutter package to detect phone shakes. Adjustable G-force and reset periods.
-version: 3.0.0
+version: 4.0.0
 homepage: https://www.github.com/deven98/shake
 
 environment:
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sensors_plus: ^3.0.0
+  sensors_plus: ^4.0.0
 
 dev_dependencies:
   flutter_test:
