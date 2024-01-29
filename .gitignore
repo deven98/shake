@@ -8,3 +8,7 @@ build/
 ios/.generated/
 ios/Flutter/Generated.xcconfig
 ios/Runner/GeneratedPluginRegistrant.*
+
+# For newer Flutter SDKs
+.flutter-plugins
+.flutter-plugins-dependencies
