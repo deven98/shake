@@ -2,55 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:shake/shake.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ExampleApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class ExampleApp extends StatefulWidget {
+  const ExampleApp({super.key});
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: DemoPage(),
-    );
-  }
+  State<ExampleApp> createState() => _ExampleAppState();
 }
 
-class DemoPage extends StatefulWidget {
-  @override
-  _DemoPageState createState() => _DemoPageState();
-}
+class _ExampleAppState extends State<ExampleApp> {
+  late final ShakeDetector detector;
+  var shakes = 0;
 
-class _DemoPageState extends State<DemoPage> {
   @override
   void initState() {
     super.initState();
-    ShakeDetector detector = ShakeDetector.autoStart(
-      onPhoneShake: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Shake!'),
-          ),
-        );
-        // Do stuff on phone shake
-      },
+
+    // ShakeDetector.waitForStart() waits for user to call detector.startListening();
+    detector = ShakeDetector.autoStart(
+      onPhoneShake: () => setState(() => shakes++),
       minimumShakeCount: 1,
       shakeSlopTimeMS: 500,
       shakeCountResetTime: 3000,
       shakeThresholdGravity: 2.7,
     );
+  }
 
-    // To close: detector.stopListening();
-    // ShakeDetector.waitForStart() waits for user to call detector.startListening();
+  @override
+  void dispose() {
+    // To close:
+    detector.stopListening();
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return MaterialApp(
+      home: Material(
+        child: Center(
+          child: Text(
+            shakes == 0 ? "Shake it!" : "Shaked $shakes time(s)",
+          ),
+        ),
+      ),
+    );
   }
 }
