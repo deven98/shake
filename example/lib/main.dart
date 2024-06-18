@@ -30,7 +30,7 @@ class _DemoPageState extends State<DemoPage> {
   @override
   void initState() {
     super.initState();
-    ShakeDetector detector = ShakeDetector.autoStart(
+    ShakeDetector _ = ShakeDetector.autoStart(
       onPhoneShake: () {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
