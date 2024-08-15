@@ -7,7 +7,10 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  sensors_plus: ^6.0.0
+  sensors_plus: 
+  git: 
+    url: https://github.com/84rrry/plus_plugins
+    path: packages/sensors_plus/sensors_plus/
   flutter:
     sdk: flutter
 
