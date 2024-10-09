@@ -16,12 +16,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DemoPage(),
+      home: const DemoPage(),
     );
   }
 }
 
 class DemoPage extends StatefulWidget {
+  const DemoPage({super.key});
+
   @override
   _DemoPageState createState() => _DemoPageState();
 }
