@@ -2,8 +2,6 @@
 
 ### Breaking Changes:
 * Changed `onPhoneShake` callback to receive a `ShakeEvent` parameter
-* Removed separate `onDetailedShake` callback as it's now redundant
-* Completely removed legacy callback support for a cleaner API
 
 ### New Features:
 * Added `ShakeDirection` enum for directional shake detection
