@@ -4,24 +4,25 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="generator" content="made with love by dartdoc 0.28.1+2">
   <meta name="description" content="shake API docs, for the Dart programming language.">
   <title>shake - Dart API docs</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="static-assets/github.css">
-  <link rel="stylesheet" href="static-assets/styles.css">
-  <link rel="icon" href="static-assets/favicon.png">
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
   
 </head>
 
-<body>
-
+<body data-base-href="" data-using-base-href="false" class="light-theme">
 <div id="overlay-under-drawer"></div>
-
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="https://www.github.com/deven98/shake">shake package</a></li>
   </ol>
@@ -29,152 +30,211 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="shake">shake</h1>
+<p>A Flutter package to detect phone shakes with directional information.</p>
+<p><a href="https://pub.dev/packages/shake"><img src="https://img.shields.io/pub/v/shake.svg" alt="pub package"></a></p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Shake detection with directional information (X, Y, Z axes)</li>
+<li>Force measurement</li>
+<li>Noise filtering option</li>
+<li>Configurable shake count and timing parameters</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Add this to your package's <code>pubspec.yaml</code> file:</p>
+<pre class="language-yaml"><code class="language-yaml">dependencies:
+  shake: ^3.0.0
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre class="language-dart"><code class="language-dart">ShakeDetector detector = ShakeDetector.autoStart(
+  onPhoneShake: (ShakeEvent event) {
+    // Access detailed shake information
+    print('Shake direction: ${event.direction}');
+    print('Shake force: ${event.force}');
+    print('Shake timestamp: ${event.timestamp}');
+  }
+);
+</code></pre>
+<p>OR</p>
+<pre class="language-dart"><code class="language-dart">ShakeDetector detector = ShakeDetector.waitForStart(
+  onPhoneShake: (ShakeEvent event) {
+    // Handle the shake event
+  }
+);
+    
+detector.startListening();
+</code></pre>
+<h3 id="breaking-changes-in-v300">Breaking Changes in v3.0.0</h3>
+<p>Version 3.0.0 introduced a breaking change where <code>onPhoneShake</code> now receives a <code>ShakeEvent</code> parameter with information about direction, force, and timestamp.</p>
+<p>If you're upgrading from v2.x, you need to update your callback to accept the ShakeEvent parameter:</p>
+<pre class="language-dart"><code class="language-dart">// Before (v2.x)
+ShakeDetector detector = ShakeDetector.autoStart(
+  onPhoneShake: () {
+    print('Shake detected!');
+  }
+);
 
-  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
-      <form class="search-sidebar" role="search">
-        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
-      </form>
-    </header>
-    
-    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-      <li><a href="https://www.github.com/deven98/shake">shake package</a></li>
-    </ol>
-    
+// After (v3.x)
+ShakeDetector detector = ShakeDetector.autoStart(
+  onPhoneShake: (ShakeEvent event) {
+    print('Shake detected!');
+    // Now you can also access event.direction, event.force, etc.
+  }
+);
+</code></pre>
+<h3 id="noise-filtering">Noise Filtering</h3>
+<pre class="language-dart"><code class="language-dart">ShakeDetector detector = ShakeDetector.autoStart(
+  onPhoneShake: (ShakeEvent event) {
+    // Handle shake
+  },
+  useFilter: true, // Enable noise filtering for more reliable detection
+);
+</code></pre>
+<h3 id="custom-configuration">Custom Configuration</h3>
+<pre class="language-dart"><code class="language-dart">ShakeDetector detector = ShakeDetector.autoStart(
+  onPhoneShake: (ShakeEvent event) {
+    // Handle shake
+  },
+  // Configure sensitivity - lower value makes it more sensitive
+  shakeThresholdGravity: 2.0,
+  // Minimum time between shake detections (ms)
+  shakeSlopTimeMS: 300, 
+  // Reset shake count after this time (ms)
+  shakeCountResetTime: 2000,
+  // Number of shakes required before triggering
+  minimumShakeCount: 2,
+);
+</code></pre>
+<h3 id="directional-shake-information">Directional Shake Information</h3>
+<p>The <code>ShakeEvent</code> provides the direction of the shake through the <code>direction</code> property:</p>
+<pre class="language-dart"><code class="language-dart">ShakeDetector detector = ShakeDetector.autoStart(
+  onPhoneShake: (ShakeEvent event) {
+    switch (event.direction) {
+      case ShakeDirection.x:
+        print('Shaken horizontally (left/right)');
+        break;
+      case ShakeDirection.y:
+        print('Shaken vertically (up/down)');
+        break;
+      case ShakeDirection.z:
+        print('Shaken forward/backward');
+        break;
+      case ShakeDirection.undefined:
+        print('Complex shake pattern');
+        break;
+    }
+  }
+);
+</code></pre>
+<h3 id="stopping-detection">Stopping Detection</h3>
+<p>To stop listening:</p>
+<pre class="language-dart"><code class="language-dart">detector.stopListening();
+</code></pre>
+<h2 id="configuration-parameters">Configuration Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shakeThresholdGravity</td>
+<td>Acceleration threshold for shake detection (in g)</td>
+<td>2.7</td>
+</tr>
+<tr>
+<td>shakeSlopTimeMS</td>
+<td>Minimum time between shake detections (in ms)</td>
+<td>500</td>
+</tr>
+<tr>
+<td>shakeCountResetTime</td>
+<td>Time before shake count resets (in ms)</td>
+<td>3000</td>
+</tr>
+<tr>
+<td>minimumShakeCount</td>
+<td>Number of shakes required before shake is triggered</td>
+<td>1</td>
+</tr>
+<tr>
+<td>useFilter</td>
+<td>Whether to apply noise filtering</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h2 id="license">License</h2>
+<p>This project is licensed under the MIT License - see your project's license file for details.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="shake">
+  <span class="name"><a href="shake/shake-library.html">shake</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="https://www.github.com/deven98/shake">shake package</a></li>
+</ol>
+
     <h5 class="hidden-xs"><span class="package-name">shake</span> <span class="package-kind">package</span></h5>
     <ol>
-          <li class="section-title">Libraries</li>
-          <li><a href="shake/shake-library.html">shake</a></li>
-          <li class="section-title">Dart</li>
-          <li><a href="dart-ui/dart-ui-library.html">dart:ui</a></li>
-          <li class="section-subtitle">Core</li>
-            <li class="section-subitem"><a href="dart-async/dart-async-library.html">dart:async</a></li>
-            <li class="section-subitem"><a href="dart-collection/dart-collection-library.html">dart:collection</a></li>
-            <li class="section-subitem"><a href="dart-convert/dart-convert-library.html">dart:convert</a></li>
-            <li class="section-subitem"><a href="dart-core/dart-core-library.html">dart:core</a></li>
-            <li class="section-subitem"><a href="dart-developer/dart-developer-library.html">dart:developer</a></li>
-            <li class="section-subitem"><a href="dart-math/dart-math-library.html">dart:math</a></li>
-            <li class="section-subitem"><a href="dart-typed_data/dart-typed_data-library.html">dart:typed_data</a></li>
-          <li class="section-subtitle">VM</li>
-            <li class="section-subitem"><a href="dart-io/dart-io-library.html">dart:io</a></li>
-            <li class="section-subitem"><a href="dart-isolate/dart-isolate-library.html">dart:isolate</a></li>
-    </ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="shake/shake-library.html">shake</a></li>
+</ol>
+
   </div>
-
-  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
-      <section class="desc markdown">
-        <h1 id="shake">shake</h1>
-<p>A flutter package to detect phone shakes.</p>
-<h2 id="getting-started">Getting Started</h2>
-<p>This project is a starting point for a Dart
-<a href="https://flutter.io/developing-packages/">package</a>,
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.</p>
-<p>For help getting started with Flutter, view our 
-<a href="https://flutter.io/docs">online documentation</a>, which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.</p>
-      </section>
-      
-        <section class="summary">
-            <h2>Libraries</h2>
-          <dl>
-            <dt id="shake">
-              <span class="name"><a href="shake/shake-library.html">shake</a></span>             
-            </dt>
-            <dd>
-              
-            </dd>          </dl>
-        </section>
-        <section class="summary">
-            <h2>Dart</h2>
-          <dl>
-            <dt id="dart:ui">
-              <span class="name"><a href="dart-ui/dart-ui-library.html">dart:ui</a></span>             
-            </dt>
-            <dd>
-              Built-in types and core primitives for a Flutter application. <a href="dart-ui/dart-ui-library.html">[...]</a>
-            </dd>            <h3>Core</h3>
-              <dt id="dart:async">
-                <span class="name"><a href="dart-async/dart-async-library.html">dart:async</a></span>               
-              </dt>
-              <dd>
-                Support for asynchronous programming,
-with classes such as Future and Stream. <a href="dart-async/dart-async-library.html">[...]</a>
-              </dd>              <dt id="dart:collection">
-                <span class="name"><a href="dart-collection/dart-collection-library.html">dart:collection</a></span>               
-              </dt>
-              <dd>
-                Classes and utilities that supplement the collection support in dart:core. <a href="dart-collection/dart-collection-library.html">[...]</a>
-              </dd>              <dt id="dart:convert">
-                <span class="name"><a href="dart-convert/dart-convert-library.html">dart:convert</a></span>               
-              </dt>
-              <dd>
-                Encoders and decoders for converting between different data representations,
-including JSON and UTF-8. <a href="dart-convert/dart-convert-library.html">[...]</a>
-              </dd>              <dt id="dart:core">
-                <span class="name"><a href="dart-core/dart-core-library.html">dart:core</a></span>               
-              </dt>
-              <dd>
-                Built-in types, collections,
-and other core functionality for every Dart program. <a href="dart-core/dart-core-library.html">[...]</a>
-              </dd>              <dt id="dart:developer">
-                <span class="name"><a href="dart-developer/dart-developer-library.html">dart:developer</a></span>               
-              </dt>
-              <dd>
-                Interact with developer tools such as the debugger and inspector. <a href="dart-developer/dart-developer-library.html">[...]</a>
-              </dd>              <dt id="dart:math">
-                <span class="name"><a href="dart-math/dart-math-library.html">dart:math</a></span>               
-              </dt>
-              <dd>
-                Mathematical constants and functions, plus a random number generator. <a href="dart-math/dart-math-library.html">[...]</a>
-              </dd>              <dt id="dart:typed_data">
-                <span class="name"><a href="dart-typed_data/dart-typed_data-library.html">dart:typed_data</a></span>               
-              </dt>
-              <dd>
-                Lists that efficiently handle fixed sized data
-(for example, unsigned 8 byte integers) and SIMD numeric types. <a href="dart-typed_data/dart-typed_data-library.html">[...]</a>
-              </dd>            <h3>VM</h3>
-              <dt id="dart:io">
-                <span class="name"><a href="dart-io/dart-io-library.html">dart:io</a></span>               
-              </dt>
-              <dd>
-                File, socket, HTTP, and other I/O support for non-web applications. <a href="dart-io/dart-io-library.html">[...]</a>
-              </dd>              <dt id="dart:isolate">
-                <span class="name"><a href="dart-isolate/dart-isolate-library.html">dart:isolate</a></span>               
-              </dt>
-              <dd>
-                Concurrent programming using <em>isolates</em>:
-independent workers that are similar to threads
-but don't share memory,
-communicating only via messages. <a href="dart-isolate/dart-isolate-library.html">[...]</a>
-              </dd>          </dl>
-        </section>
-
-  </div> <!-- /.main-content -->
-
-  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div>
-
 </main>
-
 <footer>
   <span class="no-break">
-    shake 0.1.0
+    shake
+      3.0.0
   </span>
-
   
 </footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="static-assets/typeahead.bundle.min.js"></script>
-<script src="static-assets/highlight.pack.js"></script>
-<script src="static-assets/URI.js"></script>
-<script src="static-assets/script.js"></script>
 
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
 
 </body>
-
 </html>
+

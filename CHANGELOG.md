@@ -1,3 +1,22 @@
+## [3.0.0] - 2024-04-20
+
+### Breaking Changes:
+* Changed `onPhoneShake` callback to receive a `ShakeEvent` parameter
+* Removed separate `onDetailedShake` callback as it's now redundant
+* Completely removed legacy callback support for a cleaner API
+
+### New Features:
+* Added `ShakeDirection` enum for directional shake detection
+* Added `ShakeEvent` class with direction, force, and timestamp
+* Added noise filtering for smoother shake detection
+
+### Updates:
+* Updated sensors_plus dependency to v6.1.1
+* Updated to modern Dart practices with improved typing
+* Updated minimum SDK constraints to Dart 3.0.0
+* Added linting and improved code quality
+* Enhanced example app with configurable parameters
+
 ## [2.2.0]
 
 * Updated sensors_plus dep

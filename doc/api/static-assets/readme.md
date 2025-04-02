@@ -1,19 +1,36 @@
-# highlight.js
+# Dart documentation generator
 
-Generated from https://highlightjs.org/download/ on 2017-08-30
+This directory includes static sources used by the Dart documentation generator
+through the `dart doc` command.
 
-Included languages:
+To learn more about generating and viewing the generated documentation,
+check out the [`dart doc` documentation][].
+
+[`dart doc` documentation]: https://dart.dev/tools/dart-doc
+
+## Third-party resources
+
+## highlight.js
+
+Generated from https://highlightjs.org/download/ on 2021-07-13.
+
+**License:** https://github.com/highlightjs/highlight.js/blob/main/LICENSE
+
+**Included languages:**
 
 * bash
+* c  
 * css
 * dart
+* diff
+* html, xml
 * java
 * javascript
 * json
+* kotlin
 * markdown
-* objectivec
-* ruby - dragged in by `yaml` - 🙄
+* objective-c
+* plaintext  
 * shell
 * swift
-* xml - includes html
 * yaml

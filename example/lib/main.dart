@@ -6,51 +6,170 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Shake Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        useMaterial3: true,
       ),
-      home: DemoPage(),
+      home: const DemoPage(),
     );
   }
 }
 
 class DemoPage extends StatefulWidget {
+  const DemoPage({super.key});
+
   @override
-  _DemoPageState createState() => _DemoPageState();
+  State<DemoPage> createState() => _DemoPageState();
 }
 
 class _DemoPageState extends State<DemoPage> {
+  ShakeDetector? _detector;
+  String _lastShakeInfo = 'No shake detected yet';
+  double _shakeThreshold = 2.7;
+  bool _useFilter = false;
+  int _minimumShakeCount = 1;
+  
   @override
   void initState() {
     super.initState();
-    ShakeDetector detector = ShakeDetector.autoStart(
-      onPhoneShake: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Shake!'),
-          ),
-        );
-        // Do stuff on phone shake
+    _startDetector();
+  }
+  
+  void _startDetector() {
+    // Stop previous detector if exists
+    _detector?.stopListening();
+    
+    _detector = ShakeDetector.autoStart(
+      onPhoneShake: (ShakeEvent event) {
+        setState(() {
+          _lastShakeInfo = 'Shake detected:\n'
+              'Direction: ${event.direction}\n'
+              'Force: ${event.force.toStringAsFixed(2)}\n'
+              'Time: ${event.timestamp.toString()}';
+        });
       },
-      minimumShakeCount: 1,
+      minimumShakeCount: _minimumShakeCount,
       shakeSlopTimeMS: 500,
       shakeCountResetTime: 3000,
-      shakeThresholdGravity: 2.7,
+      shakeThresholdGravity: _shakeThreshold,
+      useFilter: _useFilter,
     );
+  }
 
-    // To close: detector.stopListening();
-    // ShakeDetector.waitForStart() waits for user to call detector.startListening();
+  @override
+  void dispose() {
+    _detector?.stopListening();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Shake Detection Demo'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Last Shake Info:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(_lastShakeInfo),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              'Settings:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(height: 8),
+            ListTile(
+              title: const Text('Sensitivity'),
+              subtitle: Slider(
+                value: _shakeThreshold,
+                min: 1.0,
+                max: 5.0,
+                divisions: 20,
+                label: _shakeThreshold.toStringAsFixed(1),
+                onChanged: (value) {
+                  setState(() {
+                    _shakeThreshold = value;
+                  });
+                },
+              ),
+              trailing: Text('${_shakeThreshold.toStringAsFixed(1)} g'),
+            ),
+            SwitchListTile(
+              title: const Text('Use Noise Filter'),
+              subtitle: const Text('Smooths acceleration data'),
+              value: _useFilter,
+              onChanged: (value) {
+                setState(() {
+                  _useFilter = value;
+                });
+              },
+            ),
+            ListTile(
+              title: const Text('Minimum Shake Count'),
+              subtitle: Slider(
+                value: _minimumShakeCount.toDouble(),
+                min: 1,
+                max: 5,
+                divisions: 4,
+                label: _minimumShakeCount.toString(),
+                onChanged: (value) {
+                  setState(() {
+                    _minimumShakeCount = value.toInt();
+                  });
+                },
+              ),
+              trailing: Text('$_minimumShakeCount'),
+            ),
+            const SizedBox(height: 24),
+            Center(
+              child: ElevatedButton(
+                onPressed: _startDetector,
+                child: const Text('Apply Settings'),
+              ),
+            ),
+            const Spacer(),
+            const Center(
+              child: Text(
+                'Shake your device to test!',
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
